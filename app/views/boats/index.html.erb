@@ -17,6 +17,7 @@
   <tbody>
     <% @boats.each do |boat| %>
       <tr>
+        <td><%= image_tag boat.image.url(:medium) %></td>
         <td><%= boat.title %></td>
         <td><%= boat.description %></td>
         <td><%= boat.boat_dimensions %></td>
