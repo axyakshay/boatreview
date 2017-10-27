@@ -1,29 +1,40 @@
-<%= image_tag @boat.image.url(:medium)%>
+<div class="panel panel-default">
+  <div class="pannel-body">
+    <div class="row">
+      <div class="col-md-4">
+        <%= image_tag @boat.image.url(:medium)%>
+          <div class="table-responsive">
+            <table class="table">
+              <tbody>
+                <tr>
+                  <td><strong>Title:</strong></td>
+                  <td><%= @boat.title %></td>
+                </tr>
+            
+                <tr>
+                  <td><strong>Description:</strong></td>
+                  <td><%= @boat.description %></td>
+              
+                </tr>
+                  <td><strong>Boat dimensions:</strong></td>
+                  <td><%= @boat.boat_dimensions %></td>
+                <tr>
+                  <td><strong>Place:</strong></td>
+                  <td><%= @boat.place %></td>
+                </tr>
+                <tr>
+                  <td><strong>Rating:</strong></td>
+                  <td><%= @boat.rating %></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>  
+      </div>
+    </div>
+  </div>
+</div>
 
-<p>
-  <strong>Title:</strong>
-  <%= @boat.title %>
-</p>
 
-<p>
-  <strong>Description:</strong>
-  <%= @boat.description %>
-</p>
-
-<p>
-  <strong>Boat dimensions:</strong>
-  <%= @boat.boat_dimensions %>
-</p>
-
-<p>
-  <strong>Place:</strong>
-  <%= @boat.place %>
-</p>
-
-<p>
-  <strong>Rating:</strong>
-  <%= @boat.rating %>
-</p>
 
 <%= link_to 'Edit', edit_boat_path(@boat) %> |
 <%= link_to 'Back', boats_path %>
