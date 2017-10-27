@@ -1,30 +1,36 @@
 class BoatsController < ApplicationController
   before_action :set_boat, only: [:show, :edit, :update, :destroy]
-  
   before_action :authenticate_user!, except: [:index, :show]
 
-  # GET /boats
-  # GET /boats.json
+  def search
+    if params[:search].present?
+      @boats = Boat.search(params[:search])
+    else
+      @boats = Boat.all
+    end
+  end
+
   def index
     @boats = Boat.all
   end
 
-  # GET /boats/1
-  # GET /boats/1.json
   def show
+    @reviews = Review.where(boat_id: @boat.id).order("created_at DESC")
+
+    if @reviews.blank?
+      @avg_review = 0
+    else
+      @avg_review = @reviews.average(:rating).round(2)
+    end
   end
 
-  # GET /boats/new
   def new
     @boat = current_user.boats.build
   end
 
-  # GET /boats/1/edit
   def edit
   end
 
-  # POST /boats
-  # POST /boats.json
   def create
     @boat = current_user.boats.build(boat_params)
 
@@ -39,8 +45,6 @@ class BoatsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /boats/1
-  # PATCH/PUT /boats/1.json
   def update
     respond_to do |format|
       if @boat.update(boat_params)
@@ -53,8 +57,6 @@ class BoatsController < ApplicationController
     end
   end
 
-  # DELETE /boats/1
-  # DELETE /boats/1.json
   def destroy
     @boat.destroy
     respond_to do |format|
@@ -64,13 +66,11 @@ class BoatsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_boat
       @boat = Boat.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def boat_params
-      params.require(:boat).permit(:title, :description, :boat_dimensions, :place, :rating, :image)
+      params.require(:boat).permit(:title, :description, :boat_length, :director, :rating, :image)
     end
 end
